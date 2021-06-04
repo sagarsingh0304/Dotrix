@@ -1,3 +1,4 @@
+from helperClass.Game import Game
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
@@ -11,17 +12,22 @@ def home():
 @app.route('/joingame', methods=['GET'])
 def join_room():
     game_id = request.args.get('gameid', False)    
-    print(game_id)
-    return {'msg': f'Congratulations! You are eligible to join the room {game_id}'}
+    if game_id in Game.gameids_in_use:
+        return {'msg': f'Congratulations! You are eligible to join the room {game_id}'}
+    return {'msg': 'Wrong GameId', 'errorCode': '400'}
 
 
 @app.route('/newgame', methods=['POST'])
 def create_new_game():
     request_json = request.get_json()
     dot_rows = request_json.get('rows', False)
-    dot_cols = request_json.get('columns', False)
-    print(f'{dot_rows} x {dot_cols}')
-    return {'game':f'this is your game is this and size is {dot_rows} x {dot_cols}'}
+    dot_columns = request_json.get('columns', False)
+    newgame = Game(dot_rows, dot_columns)
+    return {
+        'message':f'successfully create a game with boardsize is {newgame.get_boardsize()}',
+        'gameId': newgame.get_gameid(),
+        'isCreator': True     
+    }
 
 
 if __name__ == "__main__":

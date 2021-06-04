@@ -20,6 +20,14 @@ class Game:
         cls.available_gameids.append(new_id)
 
 
+    def get_gameid(self):
+        return self.gameid
+
+    def get_boardsize(self):
+        return f"{self.rows} x {self.columns}"
+
     # destructor will remove gameid from the list of gameids_in_use as the game object is deleted
-    def __del__(self):
-        Game.gameids_in_use.remove(self.gameid)      
+    def __delete__(self):
+        Game.gameids_in_use.remove(self.gameid)  
+        print('desctuctor is called')    
+
