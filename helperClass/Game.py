@@ -4,7 +4,6 @@ class Game:
     available_gameids = ['134576', '201457']       # will store pre generated gameids which can be used 
 
     def __init__(self, rows, columns):
-        self.players_socketid = []      # will store the socketid of all the players in the game or room
         self.rows = rows    # number of rows of dots on the board in the game
         self.columns = columns      # number of columns of dots on the board in the game
         self.gameid = Game.available_gameids.pop()   # assigns gameid from the list of available gamid
