@@ -24,16 +24,16 @@ function sendRequest(requestMethod, apiEndPoint, data) {
     return fetch(apiEndPoint, options).then(response => response.json())    
 }
 
-joinForm.addEventListener('submit', event => {
-    event.preventDefault();
-    gameid = joinForm.elements['gameid'].value;
-    // params = {
-    //     gameId: String(id),
-    //     isCreator: false
-    // }    
-    sendRequest(joinForm.method, joinForm.action, {gameid})
-    .then(response => console.log(response))
-})
+// joinForm.addEventListener('submit', event => {
+//     event.preventDefault();
+//     gameid = joinForm.elements['gameid'].value;
+//     // params = {
+//     //     gameId: String(id),
+//     //     isCreator: false
+//     // }    
+//     sendRequest(joinForm.method, joinForm.action, {gameid})
+//     .then(response => console.log(response))
+// })
 
 createGameForm.addEventListener('submit', event => {
     event.preventDefault();

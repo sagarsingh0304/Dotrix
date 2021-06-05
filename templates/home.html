@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href=" {{ url_for('static', filename='css/main.css') }} ">
-    <link rel="shortcut icon" href="{{ url_for('static',filename='favicon.ico')}}" type="image/x-icon">
-    <title>Dotrix</title>    
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block main %}
     <main>
         <div id="form-container">
             <!-- select the form by clicking on the button will do this afterwards  -->
@@ -16,13 +8,13 @@
                 <button class="form-selector--button">Join Game</button>
                 <button class="form-selector--button">Create Game</button>
             </div> -->
-
+            
             <form action="/joingame" method="GET" id="join-form" class="form">
                 <label for="gameid">GameId :</label>
                 <input type="text" name="gameid" id="join-form--gameid" minlength="6" maxlength="6" placeholder="Game Id"  required autocomplete='off'> <br>
                 <input type="submit" value="Join Game" id="join-button">
             </form>
-            
+        
             <form action="/newgame" method="POST" id="create-game-form" class="form">
                 <label for="rows">Rows :</label>
                 <input type="number" name="rows" id="create-game--row" value="4" min="4" max="10" >
@@ -32,6 +24,8 @@
             </form>
         </div>
     </main>
+{% endblock main %} 
+
+{% block scripts %}
     <script src=" {{ url_for('static', filename='scripts/main.js') }} "></script>
-</body>
-</html>
+{% endblock scripts %}

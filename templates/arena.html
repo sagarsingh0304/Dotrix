@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block main %}
+    <main>
+        <div id="form-container">
+            <div id="text-area"></div>
+            
+            <div id="input-area">
+                <input type="text" name="avtarName" id="avtar-name" placeholder="Avtar Name" autocomplete='off' maxlength="20" minlength="2" required>
+                <button type="submit" id="send-avtar">Send</button>    
+            </div>            
+            
+        </div>
+    </main>
+
+{% endblock main %}
+
+{% block scripts %}
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script> -->
+    <!-- # for socketio wrapper -->
+    <script src=" {{ url_for('static', filename='scripts/socket.io.js') }} "></script>
+    <!-- #our custom script -->
+    <script src=" {{ url_for('static', filename='scripts/socketio.js') }} "></script>
+{% endblock scripts %}
