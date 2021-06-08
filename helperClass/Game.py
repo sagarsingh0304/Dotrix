@@ -5,6 +5,7 @@ class Game:
     map_gameid = {}       # it is used to store map of gamid with it's instance and also will store all the gameid which are in use.
 
     def __init__(self, rows, columns):
+        self.players = []   # will store the player name
         self.rows = rows    # number of rows of dots on the board in the game.
         self.columns = columns      # number of columns of dots on the board in the game.
         self.gameid = Game.available_gameids.pop()   # assigns gameid from the list of available gamid.
@@ -19,6 +20,15 @@ class Game:
     def get_boardsize(self):
         return f"{self.rows} x {self.columns}"
 
+    def get_players(self):
+        return self.players
+
+    def add_player(self, player):
+        if len(self.players) < 5:
+            self.players.append(player)
+            return True
+        return False
+
 
     # this class method will generate a new gameid which is not already in use, add it in availble_gameids list.
     @classmethod   
@@ -30,11 +40,24 @@ class Game:
 
 
     @classmethod
-    def get_gameid_instance(cls, id):        #returns the object maped to passed id, if it exists else it returns None
-        return cls.map_gameid.get(id, None)
+    def get_gameid_instance(cls, game_id):        #returns the object maped to passed id, if it exists else it returns None
+        return cls.map_gameid.get(game_id, None)
 
+
+    @classmethod              
+    def get_players_in_gameid(cls, game_id):    # will return the list of players in game
+        game_instance = cls.get_gameid_instance(game_id)
+        return game_instance.get_players()
+
+
+    @classmethod
+    def add_player_in_gameid(cls, game_id, player):     # will add player in game is possible
+        game_instance = cls.get_gameid_instance(game_id)
+        return game_instance.add_player(player)
+        
 
     @classmethod
     def delete_game(cls, id):
         del cls.map_gameid[id]
+
 

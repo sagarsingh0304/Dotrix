@@ -4,7 +4,11 @@
     <main>
         <h2> {{ errorcode }} </h2>
         {% if errorcode == 400 %}
-        <h2>Hey it looks like YOU have ENTERED a WRONG GAMEID 🤦‍♂️,  or YOUR friends don't want to play with you 😜.</h2>
+            {% if message == 'no empty slot' %}
+                <h2>Hey Buddy you are late, the room is full now, we applogize if you feel leftout 😅.</h2>
+            {% else %}
+                <h2>Hey it looks like YOU have ENTERED a WRONG GAMEID 🤦‍♂️,  or YOUR friends don't want to play with you 😜.</h2>
+            {% endif %}
         {% else %}
         <h2>YOUR http so bad that even out server is not responding to your request 😉.</h2>
         {% endif %}
