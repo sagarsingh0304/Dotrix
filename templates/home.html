@@ -1,29 +1,33 @@
 {% extends "layout.html" %}
 
 {% block main %}
-    <main>
-        <div id="form-container">
-            <!-- select the form by clicking on the button will do this afterwards  -->
-            <!-- <div id="form-selector">
-                <button class="form-selector--button">Join Game</button>
-                <button class="form-selector--button">Create Game</button>
-            </div> -->
-            
-            <form action="/joingame" method="GET" id="join-form" class="form">
-                <label for="gameid">GameId :</label>
-                <input type="text" name="gameid" id="join-form--gameid" minlength="6" maxlength="6" placeholder="Game Id"  required autocomplete='off'> <br>
-                <input type="submit" value="Join Game" id="join-button">
-            </form>
-        
-            <form action="/newgame" method="POST" id="create-game-form" class="form">
-                <label for="rows">Rows :</label>
-                <input type="number" name="rows" id="create-game--row" value="4" min="4" max="10" >
-                <label for="columns">Columns : </label>
-                <input type="number" name="columns" id="create-game--col" value="4" min="4" max="10"><br>
-                <input type="submit" value="Create Game" id="create-button">                
-            </form>
-        </div>
-    </main>
+<header>        
+    <img src="{{ url_for('static', filename='images/project-logo.png') }}" alt="Dotrix Logo" id="logo">
+    <img src="{{ url_for('static', filename='images/project-name.png') }}" alt="Dotrix name" id="logo-name">
+</header>
+
+<main>
+    <div id="form-container">        
+        <form action="/joingame" method="GET" id="join-game-form" class="form">
+            <label for="gameid">Enter GameId :</label>
+            <input type="text" name="gameid" id="join-form--gameid" minlength="6" maxlength="6" placeholder="Game Id"  required autocomplete='off'>
+            <button type="submit" id="join-button" class="button">Join Game</button>
+            <!-- <input type="submit" value="Join Game" id="join-button"> -->
+        </form>
+
+        <form action="/newgame" method="POST" id="create-game-form" class="form">
+            <label for="rows"> <span> Rows : </span>
+            <input type="number" name="rows" id="create-game--row" value="4" min="4" max="10" > </label>
+            <label for="columns"> <span> Columns : </span> 
+            <input type="number" name="columns" id="create-game--col" value="4" min="4" max="10"> </label>
+            <button type="submit" id="create-button" class="button">Create Game</button>
+            <!-- <input type="submit" value="Create Game" id="create-button">  -->
+        </form>
+    </div>
+</main>
+
+<footer>Made with ❤ by Dotrix</footer>
+
 {% endblock main %} 
 
 {% block scripts %}

@@ -1,7 +1,7 @@
 // just empty
 const joinBtn = document.getElementById('join-button');
 const createBtn = document.getElementById('create-button');
-const joinForm = document.getElementById('join-form');
+const joinForm = document.getElementById('join-game-form');
 const createGameForm = document.getElementById('create-game-form')
 
 function sendRequest(requestMethod, apiEndPoint, data) {
@@ -40,5 +40,5 @@ createGameForm.addEventListener('submit', event => {
     rows = createGameForm.elements['rows'].value;
     columns = createGameForm.elements['columns'].value;
     sendRequest(createGameForm.method, createGameForm.action, {rows, columns})
-    .then(response => console.log(response))
+    .then(response => joinForm.elements['gameid'].value = response.gameId)
 })
