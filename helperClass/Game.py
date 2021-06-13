@@ -20,8 +20,10 @@ class Game:
     def get_boardsize(self):
         return f"{self.rows} x {self.columns}"
 
+
     def get_players(self):
         return self.players
+        
 
     def add_player(self, player):
         if len(self.players) < 5:

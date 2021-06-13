@@ -18,10 +18,11 @@ def home():
 # respond to a valid HTTP GET request for joining the gameroom
 @app.route('/joingame', methods=['GET'])
 def join_game():
-    game_id = request.args.get('gameid', False)    
-    if Game.get_gameid_instance(game_id):
-        if len(Game.get_players_in_gameid(game_id)) < 5:
-            return render_template('arena.html', title="Game Arena - Dotrix", id=game_id)
+    game_id = request.args.get('gameid', False)
+    game_instance = Game.get_gameid_instance(game_id)
+    if game_instance:
+        if len(game_instance.get_players()) < 5:
+            return render_template('arena.html', title="Game Arena - Dotrix", id=game_id , dimension=game_instance.get_boardsize())
         else:
             return render_template('error.html', errorcode=400, message='no empty slot')
     return render_template('error.html', errorcode=400)

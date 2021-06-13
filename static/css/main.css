@@ -1,7 +1,7 @@
-* {
-    box-sizing: border-box; 
+*{
+box-sizing: border-box; 
 }
-    
+
 :root{
     --primary-text-ff: Verdana, Geneva, Tahoma, sans-serif;
     --form-ff: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
@@ -25,13 +25,16 @@ body{
     padding: 0;
     overflow-x: hidden;
     background-color: var(--bg-color);
-    background-image: url("../images/bg.png");
+    background-image: url('../images/bg.png');
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
     background-position-x: center;
-    font-family: var(--primary-text-ff);
+    font-family: var(--primary-text-ff);   
 }
+
+/* styling scrollbar */
+/* skipping for timing */
 
 /* Header */
 
@@ -55,8 +58,6 @@ header{
     height: 150px;
 }
 
-
-
 /* main  */
 
 main{
@@ -77,7 +78,6 @@ main{
     align-items: center;
     justify-content: space-evenly;
 }
-
 
 /* Forms */
 
@@ -105,8 +105,11 @@ main{
     align-items: center;
 }
 
-
 /* label */
+
+label{
+    display:inline-block;
+}
 
 #create-game-form > label {
     /* pa */
@@ -140,8 +143,6 @@ main{
     font-size: 18px;
 }
 
-
-
 /* input box and placeholder */
 
 input{
@@ -157,30 +158,183 @@ input{
     font-weight: bolder;
 }
 
+/* #copy-link {
+    width: 300px;
+    height: 40px;
+    background-color: var(--color-light);
+} */
+
+/*  now styles for arena html page start */
+
+/* --------------------- ARENA STARTS -------------------------*/
+
+#game-arena {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    /* margin: 1em; */
+    padding: 1em;
+    color: var(--color-light);    
+}
+
+#player-arena {
+    background-color: var(--color-dark);
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1em;
+    border-radius: 10px;
+    box-shadow: #000000 2px 2px 4px;
+}
+
+#players {
+    width: 100%; 
+}
+
+#players-list {
+    padding: 0;
+}
+
+.each-player {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    margin: 10px auto;
+    padding: 8px 8px 5px 8px;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    width: 80%;
+    height: 40px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bolder;
+    box-shadow: #000000 2px 2px 4px;
+
+    /* font-family: var(--form-ff); */
+}
+
+.each-player.turn {
+    border: var(--color-orange) 5px solid;
+    padding: 5px 8px;
+}
+
+#input-area {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#avtar-name{
+    width: 90%;
+    outline: 0;
+}
 
 #send-avtar {
+    width: 50%;
     margin: 10px auto;
     padding: 5px 8px;    
-    background-color: #ffee00;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    font-weight: bold;
     border: 0;
     border-radius: 20px;
 }
 
-label{
-    display:inline-block;
+#game-board {
+    border-radius: 10px;
+    box-shadow: #000000 2px 2px 4px,
+                var(--color-yellow) -1px -1px 2px;
+    /* padding: 10px; */
+    background-color: var(--color-dark);
+    width: 560px;
+    height: 400px;
 }
+
+#game-canvas {
+    border-radius: 10px;
+}
+
+@media (max-width: 794px){
+    #game-arena {
+        flex-direction: column;
+        justify-content: end;
+    }
+
+    #player-arena {
+        width: 100%;
+        flex-direction: row;
+        margin-bottom: 10px;
+        padding: 0.5em;
+    }
+
+    #meta-data {
+        display: none;
+    }
+
+    #players-list {
+        display: flex;
+        margin: 0;
+    }
+
+    .each-player {
+        width: 80px;
+        height: 80px;
+        border-radius: 80%;
+        font-size: 16px;
+        padding: 3px;
+    }
+
+    .each-player.turn {
+        padding: 0;
+        border: var(--color-orange) 4px solid;
+    }
+
+    #input-area {
+        display: none;
+    }
+}
+
+@media (max-width: 594px) {
+    #game-arena {
+        align-items: stretch;
+    }
+
+    #game-board {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    #game-arena {
+        padding: 0;
+        margin-top: 30px;
+        position: relative;
+        bottom: 0;
+    }
+
+    .each-player {
+        width: 60px;
+        height: 60px;
+    }    
+}
+
+/* ------------------------ ARENA ENDS ----------------------------- */
 
 /* FOOTER */
 footer {
     width: 100%;
+    margin-top: 20px;
     text-align:center;
     max-height:5vh; 
-    background: #ddedde90;
+    background: #ddedde80;
     position: relative;
     bottom: 2px;
-    color: var(--color-orange);
+    color: var(--color-dark);
 }
-
 
 @media (max-width: 748px) {
     #logo {
@@ -244,6 +398,5 @@ footer {
         padding: 5px 8px;
     }
 }
-    
-    
-    
+
+

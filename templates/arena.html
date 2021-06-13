@@ -1,21 +1,33 @@
 {% extends "layout.html" %}
 
 {% block main %}
-    <h2 >Gameid: <span id="gameid">{{ id }}</span></h2>
-    <section id="players">
-        <ul id="players-list"></ul>
-    </section>
-    <main>
-        <div id="form-container">
-            <div id="text-area"></div>
-            
-            <div id="input-area">
-                <input type="text" name="avtarName" id="avtar-name" placeholder="Avtar Name" autocomplete='off' maxlength="20" minlength="2" required>
-                <button type="submit" id="send-avtar">Send</button>    
-            </div>            
-            
-        </div>
-    </main>
+
+    <article id="game-arena">
+        <aside id="player-arena">
+            <div id="meta-data">
+                <h3><span id="gameid">{{ id }}</span> <span id="dimension">{{dimension}}</span></h3>
+            </div>
+            <div id="players">
+                <ul id="players-list">
+                    <li class="each-player">Pla1</li>
+                    <li class="each-player turn">Pla2</li>
+                    <li class="each-player">Pla3</li>
+                    <li class="each-player">Pla4</li>
+                    <li class="each-player">Pla5</li>
+                </ul>
+            </div>
+            <div>
+                <div id="text-area"></div>                
+                <div id="input-area">
+                    <input type="text" name="avtarName" id="avtar-name" placeholder="Avtar Name" autocomplete='off' maxlength="4" minlength="2" required>
+                    <button type="submit" id="send-avtar" class="button">Set</button>    
+                </div>             
+            </div>
+        </aside>
+        <section id="game-board"></section>
+    </article>
+
+    <footer> Made with ❤ by Dotrix </footer>
 
 {% endblock main %}
 
@@ -23,6 +35,8 @@
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script> -->
     <!-- # for socketio wrapper -->
     <script src=" {{ url_for('static', filename='scripts/socket.io.js') }} "></script>
-    <!-- #our custom script -->
+    <!-- # our custom script -->
     <script src=" {{ url_for('static', filename='scripts/socketio.js') }} "></script>
+    <!-- # for handeling all game functions -->
+    <script src=" {{ url_for('static', filename='scripts/game.js') }} "></script>
 {% endblock scripts %}
