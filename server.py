@@ -62,10 +62,10 @@ def handle_message(msg, game_id):
 # TODO implement unique player names 
 @socketio.on('avtar')
 def set_avtar(avtar_name, game_id):
-    Game.add_player_in_gameid(game_id, avtar_name)
-    players_list = Game.get_players_in_gameid(game_id)
+    player = Game.add_player_in_gameid(game_id, avtar_name) 
+    # players_list = Game.get_players_in_gameid(game_id)  #  it will send player list after setting avtar
     socketio.emit('set-avtar', avtar_name, to=request.sid)
-    socketio.emit('update-players', [avtar_name], to=game_id)
+    socketio.emit('update-players', [player], to=game_id)
 
 
 # triggers when a player send a move, it forwards the move to all the sockects in room

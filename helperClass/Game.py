@@ -5,6 +5,7 @@ class Game:
     map_gameid = {}       # it is used to store map of gamid with it's instance and also will store all the gameid which are in use.
 
     def __init__(self, rows, columns):
+        self.AVAILABLE_COLORS = ["#008037", "#216CD0", "#F7BC13", "#DD5D00", "#C72C41"] 
         self.players = []   # will store the player name
         self.rows = rows    # number of rows of dots on the board in the game.
         self.columns = columns      # number of columns of dots on the board in the game.
@@ -25,10 +26,17 @@ class Game:
         return self.players
         
 
-    def add_player(self, player):
+    def add_player(self, player_name):
         if len(self.players) < 5:
+            is_creator = True if len(self.players) == 0 else False
+                
+            player = {
+                "name": player_name,
+                "color": self.AVAILABLE_COLORS.pop(),
+                "isCreator": is_creator
+            }
             self.players.append(player)
-            return True
+            return player
         return False
 
 
