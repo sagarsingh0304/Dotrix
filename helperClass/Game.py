@@ -10,6 +10,7 @@ class Game:
         self.rows = rows    # number of rows of dots on the board in the game.
         self.columns = columns      # number of columns of dots on the board in the game.
         self.gameid = Game.available_gameids.pop()   # assigns gameid from the list of available gamid.
+        self.is_game_on = False
         Game.flood_gameid()     # will call the class method to generate a new gmae id to added in available gameids.
         Game.map_gameid[self.gameid] = self     # will map the object to its gameid and this can use to check gameids used
 
@@ -28,12 +29,14 @@ class Game:
 
     def add_player(self, player_name):
         if len(self.players) < 5:
-            is_creator = True if len(self.players) == 0 else False
+            is_starter = True if len(self.players) == 0 else False
                 
             player = {
                 "name": player_name,
                 "color": self.AVAILABLE_COLORS.pop(),
-                "isCreator": is_creator
+                "isStarter": is_starter,
+                "isMe": False,
+                "score": 0
             }
             self.players.append(player)
             return player

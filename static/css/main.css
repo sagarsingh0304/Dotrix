@@ -217,8 +217,25 @@ input{
 }
 
 .each-player.turn {
-    border: var(--color-orange) 5px solid;
+    border: var(--color-light) 5px solid;
     padding: 5px 8px;
+}
+
+#text-area {
+    height: 200px;
+    display:flex;
+    flex-direction: column-reverse;
+    position: absolute;
+    top: 100px;
+    right: 20px;
+}
+
+.text-message{
+    padding: 15px 15px;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    border-radius: 10px;
+    box-shadow: var(--color-dark) 2px 2px 4px;
 }
 
 #input-area {
@@ -252,6 +269,14 @@ input{
     background-color: var(--color-dark);
     width: 560px;
     height: 400px;
+}
+
+#start-game-button {
+    display: block;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    font-weight: bolder;
+    margin: 30px auto;
 }
 
 #game-canvas {
@@ -290,11 +315,14 @@ input{
 
     .each-player.turn {
         padding: 0;
-        border: var(--color-orange) 4px solid;
+        border: var(--color-light) 4px solid;
     }
 
     #input-area {
-        display: none;
+        /* display: none; */
+        position: absolute;
+        top: 50vh;
+        left: 20vw;
     }
 }
 
@@ -398,5 +426,3 @@ footer {
         padding: 5px 8px;
     }
 }
-
-
