@@ -73,13 +73,12 @@ def set_avtar(avtar_name, game_id):
 def start_game(game_id):
     send('Game is started haha enjoy !!', to=game_id)
     socketio.emit('start-game',to=game_id)
-
     
 
 # triggers when a player send a move, it forwards the move to all the sockects in room
 @socketio.on('move')
-def send_move(move, player, game_id):
-    socketio.emit('move', move, player, to=game_id)
+def send_move(moves, game_id):
+    socketio.emit('c-move', moves, to=game_id)
 
 
 # triggers when a player leaves a room

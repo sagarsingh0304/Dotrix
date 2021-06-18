@@ -135,7 +135,7 @@ function startGame(playersInGame) {
 
     canva.addEventListener('click', e => {
         if(!playersInGame[playersTurnIndex].isMe) {
-            return
+            return;
         }
         selectSide();
     });
@@ -340,17 +340,17 @@ function startGame(playersInGame) {
             }
             
             this.selectedSides++;   // incresed the count of selected side of a cell
-            socketio.on('')
+            let sideHighlighted = this.highlighted;
             this.highlighted = null;    // sets highlighted to null so that you can highlight another side of that cell at every FPS
 
             if(this.selectedSides == 4) {           // checks if the cell is filled or completed, sets the owner and returns true
                 this.owner = playersTurnIndex;
                 Cell.filledCellCount++;
                 playersInGame[playersTurnIndex].score++;
-                return true;
+                return [true, sideHighlighted];
             }
 
-            return false;           // if we reach this statement that means the cell is not filled and will return false
+            return [false, sideHighlighted];           // if we reach this statement that means the cell is not filled and will return false
         }
 
         drawFill() {
@@ -426,11 +426,21 @@ function startGame(playersInGame) {
         if(currentCells == null || currentCells.length == 0) {
             return;
         }
+        let moves = []
 
         // select the side
         let filledCell = false;
-        for(cell of currentCells) {                                
-            if(cellsArray[cell.row][cell.column].selectSide()){         // if the current selected side completes the Cell then filledCell is true
+        for(cell of currentCells) {  
+            let [isFilled, sideHighlighted] = cellsArray[cell.row][cell.column].selectSide();
+            let move = {
+                "cellRow": cell.row,
+                "cellColumn": cell.column,
+                "cellSide": sideHighlighted,
+                "isFilled": isFilled,
+                "playerIndex": playersTurnIndex
+            }
+            moves.push(move);       // pushes each move in array (since sides of 2 cells are selected therefore we have to use array)
+            if(isFilled){         // if the current selected side completes the Cell then filledCell is true
                 filledCell = true;
             }
         }
@@ -450,6 +460,39 @@ function startGame(playersInGame) {
             playersTurnIndex = (playersTurnIndex + 1) % playersInGame.length;
             playersInGameHtmlList[playersTurnIndex].classList.toggle("turn");
         }
+
+        socketio.emit('move', moves, myGameId);     // this sends the moves array to the game room
+
     }    
 
+    socketio.on("c-move", moves => {
+        console.log("moves", moves)
+        let moveCell = null;
+        let anyFilled = false       // 
+        if(playersInGame[moves[0].playerIndex].isMe) {
+            return
+        }
+        moves.forEach(move => {
+            moveCell = cellsArray[move.cellRow][move.cellColumn]
+            moveCell.highlighted = move.cellSide;
+            [fill, a] = moveCell.selectSide();  
+            if (move.isFilled){
+                anyFilled = true;
+            }      
+        })
+
+        console.log("cell", moveCell)
+        console.log('this turn', playersTurnIndex)
+        
+        // if(move.isFilled){
+        if(anyFilled){
+
+        } else {
+            playersInGameHtmlList[playersTurnIndex].classList.toggle("turn");
+            playersTurnIndex = (playersTurnIndex + 1) % playersInGame.length;
+            playersInGameHtmlList[playersTurnIndex].classList.toggle("turn");
+        }
+        console.log("next turn", playersTurnIndex)
+        
+    })
 }

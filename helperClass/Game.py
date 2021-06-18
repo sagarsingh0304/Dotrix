@@ -36,7 +36,7 @@ class Game:
                 "color": self.AVAILABLE_COLORS.pop(),
                 "isStarter": is_starter,
                 "isMe": False,
-                "score": 0
+                "score": 0  
             }
             self.players.append(player)
             return player
