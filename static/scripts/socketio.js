@@ -34,9 +34,9 @@ socketio.on('connect', () => {
 
 socketio.on('message', msg => addMessage(msg));
 
-socketio.on("start-game", () =>{    //
-    startGame(playersInGame);       //
-})                                  //
+socketio.on("start-game", () =>{    
+    startGame(playersInGame);       
+})                                  
 
 socketio.on('update-players', playerList => {
     playerList.forEach(player => addPlayer(player));        
@@ -78,6 +78,10 @@ sendAvtar.addEventListener('click', () => {
 const dimensions = document.querySelector("#dimension").innerHTML;
 
 function startGame(playersInGame) {
+
+    // game flag
+    let isGameOn = true;
+
     const playersInGameHtmlList = document.querySelectorAll(".each-player");           
     // Set game canvas
     let canva = document.createElement("canvas");
@@ -111,9 +115,6 @@ function startGame(playersInGame) {
         RIGHT : 2,
         BOTTOM : 3
     };
-
-    // game flag
-    let isGameOn = true;
 
     // Colors
     const COLOR_BOARD = "#F2F1D3";
@@ -154,6 +155,7 @@ function startGame(playersInGame) {
             socketio.emit("leave", myGameId)
         }
     }
+    
     function drawScore() {
         playersScore = [...playersInGame];
         let max = 0;
@@ -161,8 +163,7 @@ function startGame(playersInGame) {
             if(playersScore[i].score > playersScore[max].score) {
                 max = i;
             }
-        }
-        
+        }        
         canva.remove();      
         h2 = document.createElement("h2");
         h2.innerText = " Scores ";

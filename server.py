@@ -20,7 +20,7 @@ def home():
 def join_game():
     game_id = request.args.get('gameid', False)
     game_instance = Game.get_gameid_instance(game_id)
-    if game_instance:
+    if not game_instance.is_game_on:
         if len(game_instance.get_players()) < 5:
             return render_template('arena.html', title="Game Arena - Dotrix", id=game_id , dimension=game_instance.get_boardsize())
         else:
@@ -46,9 +46,12 @@ def create_new_game():
 #  when player joins the room that particular player will receive the list of players already present in room
 @socketio.on('join')
 def on_join(game_id):
-    join_room(game_id)
-    players_list = Game.get_players_in_gameid(game_id)
-    socketio.emit('update-players', players_list,to=request.sid) 
+    game = Game.get_gameid_instance(game_id)
+    if not game.is_game_on:
+        join_room(game_id)
+        players_list = Game.get_players_in_gameid(game_id)
+        socketio.emit('update-players', players_list,to=request.sid) 
+        
 
     
 # handles messages from the client socket by broadcasting it to sockets in room
@@ -62,10 +65,14 @@ def handle_message(msg, game_id):
 # TODO implement unique player names 
 @socketio.on('avtar')
 def set_avtar(avtar_name, game_id):
-    player = Game.add_player_in_gameid(game_id, avtar_name) 
+    # player = Game.add_player_in_gameid(game_id, avtar_name) 
     # players_list = Game.get_players_in_gameid(game_id)  #  it will send player list after setting avtar
-    socketio.emit('update-players', [player], to=game_id)
-    socketio.emit('set-avtar', player, to=request.sid)
+    game_instance = Game.get_gameid_instance(game_id)
+    if not game_instance.is_game_on:
+        player = game_instance.add_player(avtar_name)
+        if player:
+            socketio.emit('update-players', [player], to=game_id)
+            socketio.emit('set-avtar', player, to=request.sid)
 
 
 # this will recieve start event from player and emit to all of then so that they can srender canvas
@@ -73,6 +80,7 @@ def set_avtar(avtar_name, game_id):
 def start_game(game_id):
     send('Game is started haha enjoy !!', to=game_id)
     socketio.emit('start-game',to=game_id)
+    Game.set_game_on(game_id)
     
 
 # triggers when a player send a move, it forwards the move to all the sockects in room
@@ -88,13 +96,13 @@ def game_over(game_id):
 
 # triggers when a player leaves a room
 @socketio.on('leave')
-def on_leave(game_id, name):
-    send(f'{name} left the game room', to=game_id)
+def on_leave(game_id):
+    send('someone left the game room', to=game_id)
     leave_room(game_id)
     disconnect()
 
 
 
 if __name__ == "__main__":
-    app.run()
-    # socketio.run(app, debug=True, port=5000)
+    app.run()    # for production
+    # socketio.run(app, debug=True, port=5000)    # for development

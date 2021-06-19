@@ -63,11 +63,17 @@ class Game:
         return game_instance.get_players()
 
 
-    @classmethod
-    def add_player_in_gameid(cls, game_id, player):     # will add player in game is possible
-        game_instance = cls.get_gameid_instance(game_id)
-        return game_instance.add_player(player)
+    # @classmethod
+    # def add_player_in_gameid(cls, game_id, player):     # will add player in game is possible
+    #     game_instance = cls.get_gameid_instance(game_id)
+    #     return game_instance.add_player(player)
         
+
+    @classmethod
+    def set_game_on(cls, game_id):
+        game_instance = cls.get_gameid_instance(game_id)
+        game_instance.is_game_on = True
+
 
     @classmethod
     def delete_game(cls, id):
