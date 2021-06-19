@@ -1,6 +1,6 @@
 from helperClass.Game import Game
 
-from flask_socketio import SocketIO, send, join_room, leave_room
+from flask_socketio import SocketIO, send, join_room, leave_room, disconnect
 
 from flask import Flask, render_template, request
 
@@ -81,11 +81,18 @@ def send_move(moves, game_id):
     socketio.emit('c-move', moves, to=game_id)
 
 
+@socketio.on('game-over')
+def game_over(game_id):
+    socketio.emit('game-over', to=game_id)
+
+
 # triggers when a player leaves a room
 @socketio.on('leave')
 def on_leave(game_id, name):
     send(f'{name} left the game room', to=game_id)
     leave_room(game_id)
+    disconnect()
+
 
 
 if __name__ == "__main__":

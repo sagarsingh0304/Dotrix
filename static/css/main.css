@@ -283,6 +283,32 @@ input{
     border-radius: 10px;
 }
 
+#score-heading {
+    color: var(--color-light);
+    text-align: center;
+}
+
+.score-player{
+    width: 200px;
+    padding: 10px 14px;
+    margin: 20px auto;
+    list-style: none;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    box-shadow: #000000 2px 2px 4px;
+    letter-spacing: 3px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.score-player.winner {
+    background-color: #57c057;
+    padding: 14px 18px;
+    margin: 30px auto;
+    width: 220px;    
+}
+
 @media (max-width: 794px){
     #game-arena {
         flex-direction: column;

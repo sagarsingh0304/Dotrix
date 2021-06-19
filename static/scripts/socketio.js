@@ -74,10 +74,6 @@ sendAvtar.addEventListener('click', () => {
 
 // });
 
-function sendMove(move){
-    
-}
-
 // const gameBoard = document.querySelector("#game-board");
 const dimensions = document.querySelector("#dimension").innerHTML;
 
@@ -152,12 +148,38 @@ function startGame(playersInGame) {
             drawCells();
             drawGrid();
         } else {
+            console.log('game Over')
             drawScore();
             clearInterval(gameIntervalHandler)
+            socketio.emit("leave", myGameId)
         }
     }
     function drawScore() {
-        playersInGame.forEach(player => console.log(player))
+        playersScore = [...playersInGame];
+        let max = 0;
+        for(let i = 0; i < playersScore.length; i++) {
+            if(playersScore[i].score > playersScore[max].score) {
+                max = i;
+            }
+        }
+        
+        canva.remove();      
+        h2 = document.createElement("h2");
+        h2.innerText = " Scores ";
+        h2.id = "score-heading";
+        gameBoard.appendChild(h2);
+        let count = 0;
+        playersInGame.forEach(player => {
+            li = document.createElement('li');
+            li.className = 'score-player';
+            if(count == max) {
+                li.classList.add("winner");
+            }
+            li.innerText= player.name + " ->  "+ player.score;
+            gameBoard.appendChild(li);
+            count++;
+        });
+
     }
 
     function drawBoard() {                           // draws rectangle white board 
@@ -450,7 +472,8 @@ function startGame(playersInGame) {
         if(filledCell) {
             if(TOTAL_CELLS == Cell.filledCellCount) {
                 setTimeout(() => {          // this timeout prevents the draw loop to stop before filling the last move cell
-                    isGameOn = false;    
+                    isGameOn = false; 
+                    // socketio.emit('game-over',myGameId);   
                 }, 1000)
             }
             // playersInGame[playersTurnIndex].score++;
@@ -464,11 +487,11 @@ function startGame(playersInGame) {
         socketio.emit('move', moves, myGameId);     // this sends the moves array to the game room
 
     }    
-
+    
+    // the move event is handled on the client side here
     socketio.on("c-move", moves => {
-        console.log("moves", moves)
         let moveCell = null;
-        let anyFilled = false       // 
+        let anyFilled = false       
         if(playersInGame[moves[0].playerIndex].isMe) {
             return
         }
@@ -481,18 +504,17 @@ function startGame(playersInGame) {
             }      
         })
 
-        console.log("cell", moveCell)
-        console.log('this turn', playersTurnIndex)
-        
-        // if(move.isFilled){
         if(anyFilled){
-
+            if(TOTAL_CELLS == Cell.filledCellCount) {   //finised the game if all boxes are filled
+                setTimeout(() => {          // this timeout prevents the draw loop to stop before filling the last move cell
+                    isGameOn = false; 
+                    // socketio.emit('game-over',myGameId);   
+                }, 1000)
+            }
         } else {
             playersInGameHtmlList[playersTurnIndex].classList.toggle("turn");
             playersTurnIndex = (playersTurnIndex + 1) % playersInGame.length;
             playersInGameHtmlList[playersTurnIndex].classList.toggle("turn");
-        }
-        console.log("next turn", playersTurnIndex)
-        
+        }        
     })
 }
