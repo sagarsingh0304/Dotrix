@@ -61,12 +61,25 @@ header{
 /* main  */
 
 main{
-    /* padding: 1.5em;  */
-    /* background-color: #ddd;      */
+
     display: flex;
     justify-content: center;
     min-height: 75vh;
     align-items: center;
+}
+
+#error {
+    max-width: 600px;
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    border-radius: 20px;
+    margin: 10px auto;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
 }
 
 /* Form container */
@@ -112,7 +125,6 @@ label{
 }
 
 #create-game-form > label {
-    /* pa */
     font-style: normal;
     text-shadow: #58555525 2px 2px 2px;
     display: flex;
@@ -172,9 +184,12 @@ input{
     display: flex;
     align-items: center;
     justify-content: space-around;
-    /* margin: 1em; */
     padding: 1em;
     color: var(--color-light);    
+}
+
+#dimension{
+    display: none;
 }
 
 #player-arena {
@@ -213,7 +228,6 @@ input{
     font-weight: bolder;
     box-shadow: #000000 2px 2px 4px;
 
-    /* font-family: var(--form-ff); */
 }
 
 .each-player.turn {
@@ -265,7 +279,6 @@ input{
     border-radius: 10px;
     box-shadow: #000000 2px 2px 4px,
                 var(--color-yellow) -1px -1px 2px;
-    /* padding: 10px; */
     background-color: var(--color-dark);
     width: 560px;
     height: 400px;
@@ -345,7 +358,6 @@ input{
     }
 
     #input-area {
-        /* display: none; */
         position: absolute;
         top: 50vh;
         left: 20vw;

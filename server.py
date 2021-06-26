@@ -20,9 +20,12 @@ def home():
 def join_game():
     game_id = request.args.get('gameid', False)
     game_instance = Game.get_gameid_instance(game_id)
+    if not game_instance:
+        return render_template('error.html', errorcode=400)
+        
     if not game_instance.is_game_on:
         if len(game_instance.get_players()) < 5:
-            return render_template('arena.html', title="Game Arena - Dotrix", id=game_id , dimension=game_instance.get_boardsize())
+            return render_template('arena.html', title="Game Arena", id=game_id , dimension=game_instance.get_boardsize())
         else:
             return render_template('error.html', errorcode=400, message='no empty slot')
     return render_template('error.html', errorcode=400)
@@ -100,7 +103,6 @@ def on_leave(game_id):
     send('someone left the game room', to=game_id)
     leave_room(game_id)
     disconnect()
-
 
 
 if __name__ == "__main__":
