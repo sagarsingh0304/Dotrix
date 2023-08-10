@@ -106,5 +106,5 @@ def on_leave(game_id):
 
 
 if __name__ == "__main__":
-    app.run()    # for production
+    app.run(host='0.0.0.0', port=5000)    # for production
     # socketio.run(app, debug=True, port=5000)    # for development
